@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Config Scoreboard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Anuphan:wght@100..700&family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+        body {
+            font-family: "Sarabun", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            padding: 20px;
+            background: #f7f7f7;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            background: #1e90ff;
+            color: #fff;
+            margin-right: 10px;
+        }
+
+        button.reset {
+            background: #ff4500;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>ตั้งค่า Scoreboard</h2>
+    <label>ชื่อทีมที่ 1</label><input type="text" id="inputHome" value="ทีมเจ้าบ้าน">
+    <label>ชื่อทีมที่ 2</label><input type="text" id="inputAway" value="ทีมเยือน">
+    <label>คะแนนทีมที่ 1</label><input type="number" id="inputHomeScore" value="0">
+    <label>คะแนนทีมที่ 2</label><input type="number" id="inputAwayScore" value="0">
+    <button onclick="applyConfig()">บันทึก</button>
+    <button class="reset" onclick="resetScore()">รีเซ็ต คะแนน</button>
+
+    <script>
+        const ws = new WebSocket("ws://localhost:3000");
+
+        function applyConfig() {
+            const data = {
+                homeName: document.getElementById("inputHome").value,
+                awayName: document.getElementById("inputAway").value,
+                homeScore: document.getElementById("inputHomeScore").value,
+                awayScore: document.getElementById("inputAwayScore").value
+            };
+            ws.send(JSON.stringify(data));
+            alert("บันทึกเรียบร้อย!");
+        }
+
+        function resetScore() {
+            document.getElementById("inputHomeScore").value = 0;
+            document.getElementById("inputAwayScore").value = 0;
+            applyConfig();
+        }
+
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            document.getElementById("inputHome").value = data.homeName;
+            document.getElementById("inputAway").value = data.awayName;
+            document.getElementById("inputHomeScore").value = data.homeScore;
+            document.getElementById("inputAwayScore").value = data.awayScore;
+        };
+    </script>
+</body>
+
+</html>
