@@ -52,8 +52,8 @@
 └─────────┼────────────────────────┼──────────────────┘
           │                        │
           │              ┌─────────┴─────────┐
-          │              │   Score Data       │
-          │              │   (in-memory)      │
+          │              │   Score Data      │
+          │              │   (in-memory)     │
           │              └─────────┬─────────┘
           │                        │
     ┌─────┴──────┐          ┌──────┴──────┐
@@ -209,14 +209,6 @@ node src/server.js
 5. ลองกดปุ่มรีเซ็ต → ตรวจสอบว่าค่าถูกล้าง
 
 ---
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch: `git checkout -b feature/amazing-feature`
-3. Commit your changes: `git commit -m 'Add some amazing feature'`
-4. Push to the branch: `git push origin feature/amazing-feature`
-5. Open a Pull Request
 
 ### Improvement Ideas
 
